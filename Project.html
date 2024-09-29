@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Project</title>
+        <link rel="stylesheet" href="Project.css" />
+    </head>
+    <body>
+        <br>
+        <br>
+        <h1>Enter Password Specfications</h1>
+        <div>
+            <h3>Enter the length of your desired password (must be above 4 characters).</h3>
+            <label for="length"></label>
+                <input type="text" id="length" minlength="1" maxlength="2" placeholder="Enter Length of Password" required>
+            <br>
+            <h5 id="invalidLength"></h5>
+            <h3>Would you like capital letters in your password (y/n)?</h3>
+            <label for="capitalLetters"></label>
+                <input id="capitalLetters" type="text" minlength="1" maxlength="1" placeholder="Enter y/n" required>
+            <br>
+            <h5 id="invalidUpper"></h5>
+            <h3>Would you like lower case letter in you password (y/n)?</h3>
+            <label for="lowerLetters"></label>
+                <input id="lowerLetters" type="text" minlength="1" maxlength="1" placeholder="Enter y/n" required>
+            <br>
+            <h5 id="invalidLower"></h5>
+            <h3>Would you like numbers in your password (y/n)?</h3>
+            <label for="numbers"></label>
+                <input id="numbers" type="text" minlength="1" maxlength="1" placeholder="Enter y/n" required>
+            <br>
+            <h5 id="invalidNumber"></h5>
+            <h3>Would you like special characters in your password (y/n)?</h3>
+            <label for="special"></label>
+                <input id="special" type="text" minlength="1" maxlength="1" placeholder="Enter y/n" required>
+            <br>
+            <h5 id="invalidSpecial"></h5>
+            <br>
+                <button onclick="getPassword()">Generate Password</button>
+                <br>
+                <br>
+                <p id="password"></p>
+
+                <script>
+                    function getPassword() {
+                        var newPassword = "";
+
+                        var length = document.getElementById("length").value;
+                        var upper = document.getElementById("capitalLetters").value;
+                        var lower = document.getElementById("lowerLetters").value;
+                        var numbers = document.getElementById("numbers").value;
+                        var special = document.getElementById("special").value;
+    
+
+                        let validLength = true;
+                        let validUpper = true;
+                        let validLower = true;
+                        let validNumber = true;
+                        let validSpecial = true;
+
+                        if ((typeof(length) !== 'number' && Number.isInteger(length)) || length < 4) {
+                            document.getElementById("invalidLength").innerHTML = "Invalid Input";
+                            validLength = false;
+                        }
+                        else {
+                            document.getElementById("invalidLength").innerHTML = "";
+                        }
+                        if (upper != 'y' && upper != 'n') {
+                            document.getElementById("invalidUpper").innerHTML = "Invalid Input";
+                            validUpper = false;
+                        }
+                        else {
+                            document.getElementById("invalidUpper").innerHTML = "";
+                        }
+                        if (lower != 'y' && lower != 'n') {
+                            document.getElementById("invalidLower").innerHTML = "Invalid Input";
+                            validLower = false;
+                        }
+                        else {
+                            document.getElementById("invalidLower").innerHTML = "";
+                        }
+                        if (numbers != 'y' && numbers != 'n') {
+                            document.getElementById("invalidNumber").innerHTML = "Invalid Input";
+                            validNumber = false;
+                        }
+                        else {
+                            document.getElementById("invalidNumber").innerHTML = "";
+                        }
+                        if (special != 'y' && special != 'n') {
+                            document.getElementById("invalidSpecial").innerHTML = "Invalid Input";
+                            validSpecial = false;
+                        }
+                        else {
+                            document.getElementById("invalidSpecial").innerHTML = "";
+                        }
+
+                        if (validLength && validLower && validNumber && validSpecial && validUpper) {
+                            const LOWERCASE = "abcdefghijklmnopqrstuvwxyz".split("");
+                            const UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+                            const NUMBERS = "0123456789".split("");
+                            const SPECIALS = "!@#$%^&*()-_+=[]{};:,<.>/?|".split("");
+
+                            var passwordLength = 0;
+
+                            while (passwordLength < Number(length)) {  
+                                var randomType = Math.floor(Math.random() * 4)
+                                if (randomType === 0 && lower === 'y') {
+                                    var randChar = Math.floor(Math.random() * 26)
+                                    newPassword += LOWERCASE[randChar];
+                                    passwordLength++;
+                                }
+                                else if (randomType === 1 && upper === 'y') {
+                                    var randChar = Math.floor(Math.random() * 26)
+                                    newPassword += UPPERCASE[randChar];
+                                    passwordLength++;
+                                }
+                                else if (randomType === 2 && numbers === 'y') {
+                                    var randChar = Math.floor(Math.random() * 10)
+                                    newPassword += NUMBERS[randChar];
+                                    passwordLength++;
+                                }
+                                else if (randomType === 3 && special === 'y') {
+                                    var randChar = Math.floor(Math.random() * 27)
+                                    newPassword += SPECIALS[randChar];
+                                    passwordLength++;
+                                }
+                            }
+                            document.getElementById("password").innerText = newPassword;
+                        }
+
+                    }
+                </script>
+        </div>
+    </body>
+</html>
